@@ -1,6 +1,15 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Address } from './address.entity';
+import { RESTAURANT_STATUS } from './../../constants';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@Entity({ name: 'user' })
+@Entity({ name: 'restaurants' })
 export class Restaurants extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -9,35 +18,53 @@ export class Restaurants extends BaseEntity {
   name: string;
 
   @Column()
-  addressId: number;
-
-  @Column()
   ownerId: number;
 
   @Column()
-  isActive: boolean;
+  phoneNumber: string;
+
+  @Column()
+  phoneNumberCountryCode: string;
+
+  @Column()
+  landline: string;
+
+  @Column()
+  landlineCode: string;
+
+  @Column()
+  currentStep: number;
+
+  @Column({
+    default: false,
+  })
+  isPhoneVerified: boolean;
+
+  @Column({
+    default: false,
+  })
+  isLandlineVerified: boolean;
 
   @Column()
   isVerified: boolean;
 
-  @Column()
-  fssaiNumber: string;
+  @Column({
+    default: RESTAURANT_STATUS.DRAFT,
+  })
+  status: string;
 
-  @Column()
-  openTime: Date;
-
-  @Column()
-  closeTime: Date;
-
-  @Column()
-  typeId: number;
-
-  @Column()
-  dayOfWeek: string;
+  @Column({
+    default: false,
+  })
+  whatsAppNotification: boolean;
 
   @Column({ name: 'created_at' })
   createdAt: Date;
 
   @Column({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToOne(() => Address, (address) => address.restaurant, { cascade: true })
+  @JoinColumn()
+  address: Address;
 }

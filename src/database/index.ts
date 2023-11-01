@@ -6,8 +6,9 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 const {
   DATABASE: { type, host, port, username, password, database },
 } = configs;
+
 export const dbConfiguration: TypeOrmModuleOptions = {
-  type: type as 'mysql',
+  type: type,
   host,
   port,
   username,
