@@ -1,3 +1,4 @@
+import { Address, Restaurants } from 'src/database/entities';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { configs } from 'src/configs';
 import { DATABASE_CONFIG_CONSTANTS } from 'src/constants';
@@ -15,6 +16,7 @@ export const dbConfiguration: TypeOrmModuleOptions = {
   password,
   database,
   ...DATABASE_CONFIG_CONSTANTS,
+  entities: [Restaurants, Address],
 };
 
 export const connectionSource = new DataSource(

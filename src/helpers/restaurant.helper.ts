@@ -1,8 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { ISaveBasicDetails } from 'src/interface';
 
 @Injectable()
 export class RestaurantHelper {
-  public filterRestaurantData = (obj: any) => {
+  /**
+   * @description Function to filter restaurant specific values
+   * @param obj
+   * @returns
+   */
+  public filterRestaurantData = (obj: ISaveBasicDetails) => {
     const {
       name,
       phoneNumber,

@@ -1,28 +1,24 @@
 import { RestaurantRepository } from '../../repositories';
 import { RestaurantHelper } from './../../helpers';
-import { Dependencies, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ISaveBasicDetails } from 'src/interface';
 
 @Injectable()
-@Dependencies(RestaurantHelper)
 export class RestaurantService {
   constructor(
     private readonly restaurantHelper: RestaurantHelper,
-    private restaurantRepository: RestaurantRepository,
+    private readonly restaurantRepository: RestaurantRepository,
   ) {}
 
-  createRestaurant = async (request: ISaveBasicDetails) => {
-    console.log(
-      '🚀 ~ file: restaurant.service.ts:15 ~ RestaurantService ~ createRestaurant= ~ request:',
-      request,
-    );
+  async createRestaurant(request: ISaveBasicDetails) {
     const { restaurantData, restData } =
       this.restaurantHelper.filterRestaurantData(request);
 
-    const restaurantFound = this.restaurantRepository.getRestaurants({
+    const restaurantFound = await this.restaurantRepository.getRestaurants({
       name: request?.name,
       ownerId: request?.ownerId,
     });
+    console.log(restaurantFound);
 
     if (restaurantFound) {
       throw new Error(
@@ -32,5 +28,5 @@ export class RestaurantService {
     const restaurant =
       await this.restaurantRepository.saveRestaurants(restaurantData);
     console.log('🚀 ~ fil', restData, 't:', restaurant);
-  };
+  }
 }
