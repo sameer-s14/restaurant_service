@@ -5,8 +5,9 @@ export interface IRestaurant {
   isVerified?: boolean;
   phoneNumber?: string;
   phoneNumberCountryCode?: string;
-  landLine?: string;
+  landlineNumber?: string;
   landLineCode?: string;
+  status?: string;
 }
 
 export interface IAddress {

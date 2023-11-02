@@ -15,6 +15,7 @@ export const dbConfiguration: TypeOrmModuleOptions = {
   username,
   password,
   database,
+  logging: true,
   ...DATABASE_CONFIG_CONSTANTS,
   entities: [Restaurants, Address],
 };

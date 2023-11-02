@@ -17,10 +17,10 @@ export interface ISaveBasicDetails {
   isVerified?: boolean;
   phoneNumber?: string;
   phoneNumberCountryCode?: string;
-  landLine?: string;
+  landlineNumber?: string;
   landLineCode?: string;
-  latitude?: number;
-  longitude?: number;
+  latitude?: string;
+  longitude?: string;
   address?: string;
   state?: string;
   district?: string;

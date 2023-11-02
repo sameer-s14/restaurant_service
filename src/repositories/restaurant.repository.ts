@@ -1,4 +1,4 @@
-import { IAddress, IRestaurant } from '../interface';
+import { IRestaurant } from '../interface';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Restaurants } from 'src/database/entities';
@@ -11,23 +11,17 @@ export class RestaurantRepository {
   ) {}
 
   // Get Restaurant
-  getRestaurants(where: IRestaurant) {
-    return this.restaurants.findOne({ where });
+  getRestaurant(where: IRestaurant) {
+    return this.restaurants.findOne({ where, relations: { address: true } });
+    return this.restaurants
+      .createQueryBuilder('restaurant')
+      .leftJoinAndSelect('restaurant.address', 'address')
+      .where('restaurant.id = :id', { id: 1 })
+      .getOne();
   }
 
   // Save Restaurant Data
   saveRestaurants(data: IRestaurant) {
     return this.restaurants.save(data);
-  }
-
-  getRestaurantWithLocation(where: IRestaurant, address: IAddress) {
-    return (
-      this.restaurants
-        .createQueryBuilder(Restaurants.name)
-        .leftJoinAndSelect('restaurants.address', 'address')
-        // .where('author.id = :id', { id })
-        // .andWhere(condition, parameters) // Add the condition here
-        .getOne()
-    );
   }
 }

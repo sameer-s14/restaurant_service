@@ -1,25 +1,21 @@
 import { Restaurants } from 'src/database/entities';
 import { COUNTRY } from 'src/constants';
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { AbstractEntity } from './abstract.entity';
 
 @Entity({ name: 'addresses' })
-export class Address extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Address extends AbstractEntity<Address> {
   @Column({ default: COUNTRY.INDIA })
   country: string;
 
-  @Column()
+  @Column({
+    name: 'entity_id',
+  })
   entityId: number;
 
-  @Column()
+  @Column({
+    name: 'entity_type',
+  })
   entityType: string;
 
   @Column()
@@ -43,21 +39,20 @@ export class Address extends BaseEntity {
   @Column()
   longitude: string;
 
-  @Column()
+  @Column({
+    name: 'building_number',
+  })
   buildingNumber: string;
 
-  @Column()
+  @Column({
+    name: 'pin_code',
+  })
   pinCode: string;
 
-  @Column({ default: false })
+  @Column({ default: false, name: 'exact_location' })
   exactLocation: boolean;
 
-  @Column({ name: 'created_at' })
-  createdAt: Date;
-
-  @Column({ name: 'updated_at' })
-  updatedAt: Date;
-
-  @OneToOne(() => Restaurants, (restaurants) => restaurants.address)
+  @ManyToOne(() => Restaurants, (item) => item?.address, { cascade: true })
+  @JoinColumn({ name: 'entity_id' })
   restaurant: Restaurants;
 }

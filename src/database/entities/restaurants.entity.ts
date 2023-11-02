@@ -1,51 +1,44 @@
 import { Address } from './address.entity';
 import { RESTAURANT_STATUS } from './../../constants';
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { AbstractEntity } from './abstract.entity';
 
 @Entity({ name: 'restaurants' })
-export class Restaurants extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Restaurants extends AbstractEntity<Restaurants> {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ name: 'owner_id' })
   ownerId: number;
 
-  @Column()
+  @Column({ name: 'phone_number' })
   phoneNumber: string;
 
-  @Column()
+  @Column({ name: 'phone_number_country_code' })
   phoneNumberCountryCode: string;
 
-  @Column()
-  landline: string;
+  @Column({ name: 'landline_number' })
+  landlineNumber: string;
 
-  @Column()
+  @Column({ name: 'landline_code' })
   landlineCode: string;
 
-  @Column()
+  @Column({ name: 'current_step' })
   currentStep: number;
 
   @Column({
     default: false,
+    name: 'is_phone_verified',
   })
   isPhoneVerified: boolean;
 
   @Column({
     default: false,
+    name: 'is_landline_verified',
   })
   isLandlineVerified: boolean;
 
-  @Column()
+  @Column({ name: 'is_verified' })
   isVerified: boolean;
 
   @Column({
@@ -55,16 +48,10 @@ export class Restaurants extends BaseEntity {
 
   @Column({
     default: false,
+    name: 'whats_app_notifications',
   })
-  whatsAppNotification: boolean;
+  whatsAppNotifications: boolean;
 
-  @Column({ name: 'created_at' })
-  createdAt: Date;
-
-  @Column({ name: 'updated_at' })
-  updatedAt: Date;
-
-  @OneToOne(() => Address, (address) => address.restaurant, { cascade: true })
-  @JoinColumn()
-  address: Address;
+  @OneToMany(() => Address, (address) => address.restaurant)
+  address: Address[];
 }
