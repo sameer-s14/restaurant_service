@@ -19,16 +19,21 @@ export class RestaurantService {
       const { restaurantData, restData: addressData } =
         this.restaurantHelper.filterRestaurantData(request);
 
-      // const restaurantFound = await this.restaurantRepository.getRestaurant({
-      //   name: request?.name,
-      //   ownerId: request?.ownerId,
-      // });
+      const restaurantFound = await this.restaurantRepository.getRestaurant({
+        name: request?.name,
+        ownerId: request?.ownerId,
+      });
 
-      // if (restaurantFound) {
-      //   throw new Error(
-      //     `Restaurant ${request.name} in ${request.address} already exists`,
-      //   );
-      // }
+      // If Same restaurant is available for the user in same address
+      if (
+        restaurantFound?.address?.find(
+          (add) => add.address === addressData?.address,
+        )
+      ) {
+        throw new Error(
+          `Restaurant ${request.name} in ${request.address} already exists`,
+        );
+      }
       const restaurant = await this.restaurantRepository.saveRestaurants({
         ...restaurantData,
         status: RESTAURANT_STATUS.DRAFT,

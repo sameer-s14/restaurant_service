@@ -13,11 +13,6 @@ export class RestaurantRepository {
   // Get Restaurant
   getRestaurant(where: IRestaurant) {
     return this.restaurants.findOne({ where, relations: { address: true } });
-    return this.restaurants
-      .createQueryBuilder('restaurant')
-      .leftJoinAndSelect('restaurant.address', 'address')
-      .where('restaurant.id = :id', { id: 1 })
-      .getOne();
   }
 
   // Save Restaurant Data
