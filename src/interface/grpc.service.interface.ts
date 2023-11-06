@@ -1,3 +1,6 @@
+import { ID } from './common.interface';
+import { IAddress, IRestaurant } from './model.interface';
+
 export enum PACKAGE_NAMES {
   RESTAURANT = 'restaurant',
 }
@@ -8,24 +11,10 @@ export enum SERVICES {
 
 export enum RESTAURANT_METHODS {
   CHECK_HEALTH = 'checkHealth',
+  CREATE_RESTAURANT = 'createRestaurant',
+  UPDATE_BASIC_DETAILS = 'updateBasicDetails',
+  GET_RESTAURANT_BASIC_DETAILS = 'getRestaurantBasicDetails',
 }
-
-export interface ISaveBasicDetails {
-  name?: string;
-  ownerId?: number;
-  currentStep?: number;
-  isVerified?: boolean;
-  phoneNumber?: string;
-  phoneNumberCountryCode?: string;
-  landlineNumber?: string;
-  landLineCode?: string;
-  latitude?: string;
-  longitude?: string;
-  address?: string;
-  state?: string;
-  district?: string;
-  country?: string;
-  pinCode?: string;
-  exactLocation?: boolean;
-  whatsAppNotification?: boolean;
+export interface ISaveBasicDetails extends IRestaurant {
+  address?: ID<IAddress>;
 }

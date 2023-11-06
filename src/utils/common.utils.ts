@@ -1,4 +1,5 @@
 import { config } from 'dotenv';
+import { IResponse } from 'src/interface';
 config({ path: '.env' });
 
 export const getEnvVariables = (key: string) => {
@@ -7,7 +8,10 @@ export const getEnvVariables = (key: string) => {
   return value;
 };
 
-export function setSuccessResponse(data: unknown = null, message = 'Success') {
+export function setSuccessResponse(
+  data = null,
+  message = 'Success',
+): IResponse {
   return {
     status: true,
     message,
@@ -15,7 +19,7 @@ export function setSuccessResponse(data: unknown = null, message = 'Success') {
   };
 }
 
-export function setErrorResponse(message = 'Error', data = null) {
+export function setErrorResponse(message = 'Error', data = null): IResponse {
   return {
     status: false,
     message,
@@ -23,7 +27,7 @@ export function setErrorResponse(message = 'Error', data = null) {
   };
 }
 
-export function setInitialResponse() {
+export function setInitialResponse(): IResponse {
   return {
     status: false,
     message: '',

@@ -8,6 +8,7 @@ export interface IRestaurant {
   landlineNumber?: string;
   landLineCode?: string;
   status?: string;
+  whatsAppNotifications?: boolean;
 }
 
 export interface IAddress {

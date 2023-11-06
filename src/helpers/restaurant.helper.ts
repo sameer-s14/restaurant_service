@@ -16,7 +16,7 @@ export class RestaurantHelper {
       landlineNumber,
       landLineCode,
       ownerId,
-      whatsAppNotification,
+      whatsAppNotifications,
       ...restData
     } = obj;
     return {
@@ -27,7 +27,7 @@ export class RestaurantHelper {
         landlineNumber,
         landLineCode,
         ownerId,
-        whatsAppNotification,
+        whatsAppNotifications,
       },
       restData,
     };

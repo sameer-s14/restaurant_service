@@ -1,3 +1,4 @@
+import { ID } from './../interface/common.interface';
 import { IAddress } from '../interface';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -18,5 +19,10 @@ export class AddressRepository {
   // Save Address Data
   saveAddress(data: IAddress) {
     return this.address.save(data);
+  }
+
+  // Update Address
+  updateAddress(whereCondition: ID<IAddress>, data: IAddress) {
+    return this.address.update(whereCondition, data);
   }
 }
