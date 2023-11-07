@@ -10,3 +10,8 @@ export const DATABASE_CONFIG_CONSTANTS = {
 };
 
 export const ENV_FILE_PATH = '.env';
+
+export const enum ENTITIES {
+  RESTAURANT = 'restaurant',
+  USER = 'user',
+}

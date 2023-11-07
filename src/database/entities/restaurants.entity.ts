@@ -1,43 +1,57 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Address } from './address.entity';
+import { RESTAURANT_STATUS } from './../../constants';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { AbstractEntity } from './abstract.entity';
 
-@Entity({ name: 'user' })
-export class Restaurants extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+@Entity({ name: 'restaurants' })
+export class Restaurants extends AbstractEntity<Restaurants> {
   @Column()
   name: string;
 
-  @Column()
-  addressId: number;
-
-  @Column()
+  @Column({ name: 'owner_id' })
   ownerId: number;
 
-  @Column()
-  isActive: boolean;
+  @Column({ name: 'phone_number' })
+  phoneNumber: string;
 
-  @Column()
+  @Column({ name: 'phone_number_country_code' })
+  phoneNumberCountryCode: string;
+
+  @Column({ name: 'landline_number' })
+  landlineNumber: string;
+
+  @Column({ name: 'landline_code' })
+  landlineCode: string;
+
+  @Column({ name: 'current_step' })
+  currentStep: number;
+
+  @Column({
+    default: false,
+    name: 'is_phone_verified',
+  })
+  isPhoneVerified: boolean;
+
+  @Column({
+    default: false,
+    name: 'is_landline_verified',
+  })
+  isLandlineVerified: boolean;
+
+  @Column({ name: 'is_verified' })
   isVerified: boolean;
 
-  @Column()
-  fssaiNumber: string;
+  @Column({
+    default: RESTAURANT_STATUS.DRAFT,
+  })
+  status: string;
 
-  @Column()
-  openTime: Date;
+  @Column({
+    default: false,
+    name: 'whats_app_notifications',
+  })
+  whatsAppNotifications: boolean;
 
-  @Column()
-  closeTime: Date;
-
-  @Column()
-  typeId: number;
-
-  @Column()
-  dayOfWeek: string;
-
-  @Column({ name: 'created_at' })
-  createdAt: Date;
-
-  @Column({ name: 'updated_at' })
-  updatedAt: Date;
+  @OneToMany(() => Address, (address) => address.restaurant)
+  address: Address[];
 }

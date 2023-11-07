@@ -6,3 +6,27 @@ export const getEnvVariables = (key: string) => {
   if (!value) throw new Error(`Env variable ${key} not found`);
   return value;
 };
+
+export function setSuccessResponse(data: unknown = null, message = 'Success') {
+  return {
+    status: true,
+    message,
+    data,
+  };
+}
+
+export function setErrorResponse(message = 'Error', data = null) {
+  return {
+    status: false,
+    message,
+    data,
+  };
+}
+
+export function setInitialResponse() {
+  return {
+    status: false,
+    message: '',
+    data: null,
+  };
+}

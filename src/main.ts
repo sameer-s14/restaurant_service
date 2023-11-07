@@ -1,7 +1,7 @@
-import { PACKAGE_NAMES } from './interface/grpc.service.interface';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './modules/app.module';
+import { grpcPackages, grpcProtoPaths } from './constants/grpc.constants';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
@@ -10,8 +10,8 @@ async function bootstrap() {
       transport: Transport.GRPC,
       options: {
         url: process.env.GRPC_URL,
-        package: PACKAGE_NAMES.RESTAURANT,
-        protoPath: 'proto/restaurant.proto',
+        package: grpcPackages,
+        protoPath: grpcProtoPaths,
         loader: {
           keepCase: true,
         },
