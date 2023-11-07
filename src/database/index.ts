@@ -1,6 +1,10 @@
-import { RestaurantTimings } from './entities/restaurantTimings.entity';
-import { RestaurantDetails } from './entities/restaurantDetails.entity';
-import { Address, Restaurants } from 'src/database/entities';
+import {
+  Address,
+  Restaurants,
+  TypeMasters,
+  RestaurantTimings,
+  RestaurantDetails,
+} from 'src/database/entities';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { configs } from 'src/configs';
 import { DATABASE_CONFIG_CONSTANTS } from 'src/constants';
@@ -19,7 +23,13 @@ export const dbConfiguration: TypeOrmModuleOptions = {
   database,
   logging: true,
   ...DATABASE_CONFIG_CONSTANTS,
-  entities: [Restaurants, Address, RestaurantDetails, RestaurantTimings],
+  entities: [
+    Restaurants,
+    Address,
+    TypeMasters,
+    RestaurantDetails,
+    RestaurantTimings,
+  ],
 };
 
 export const connectionSource = new DataSource(

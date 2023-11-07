@@ -6,11 +6,13 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { ENV_FILE_PATH } from 'src/constants';
 import { RestaurantModule } from './restaurants';
+import { MiscModule } from './misc';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: ENV_FILE_PATH }),
     TypeOrmModule.forRoot(dbConfiguration),
     RestaurantModule,
+    MiscModule,
   ],
   controllers: [AppController],
   providers: [AppService],
