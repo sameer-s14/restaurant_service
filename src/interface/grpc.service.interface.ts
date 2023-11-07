@@ -1,6 +1,3 @@
-import { ID } from './common.interface';
-import { IAddress, IRestaurant } from './model.interface';
-
 export enum PACKAGE_NAMES {
   RESTAURANT = 'restaurant',
 }
@@ -14,7 +11,7 @@ export enum RESTAURANT_METHODS {
   CREATE_RESTAURANT = 'createRestaurant',
   UPDATE_BASIC_DETAILS = 'updateBasicDetails',
   GET_RESTAURANT_BASIC_DETAILS = 'getRestaurantBasicDetails',
-}
-export interface ISaveBasicDetails extends IRestaurant {
-  address?: ID<IAddress>;
+  GET_RESTAURANT_DETAILS = 'getRestaurantDetails',
+  UPDATE_RESTAURANT_DETAILS = 'updateRestaurantDetails',
+  SAVE_RESTAURANT_DETAILS = 'saveRestaurantDetails',
 }

@@ -1,4 +1,4 @@
-import { RestaurantRepository, AddressRepository } from '../../repositories';
+import { RestaurantRepository, AddressRepository } from '../repositories';
 import { Injectable } from '@nestjs/common';
 import { ID, IRestaurant, ISaveBasicDetails } from 'src/interface';
 import { ENTITIES, RESTAURANT_STATUS } from 'src/constants';
@@ -93,12 +93,13 @@ export class RestaurantService {
 
       response = setSuccessResponse(null, 'Updated Successfully');
     } catch (err) {
-      console.log('RestaurantService :: createRestaurant :: ', err.message);
+      console.log('RestaurantService :: updateBasicDetails :: ', err.message);
       response.message = err?.message;
     }
     return response;
   }
 
+  // Get Restaurant Basic Details
   async getRestaurantBasicDetails(where: ID<IRestaurant>) {
     let response = setInitialResponse();
     try {
@@ -108,7 +109,10 @@ export class RestaurantService {
       });
       response = setSuccessResponse(restaurantFound, 'Restaurant Found');
     } catch (err) {
-      console.log('RestaurantService :: createRestaurant :: ', err.message);
+      console.log(
+        'RestaurantService :: getRestaurantBasicDetails :: ',
+        err.message,
+      );
       response.message = err?.message;
     }
     return response;

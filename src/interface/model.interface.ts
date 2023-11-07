@@ -1,3 +1,4 @@
+import { WEEK_DAYS } from './../constants/model.constants';
 export interface IRestaurant {
   name?: string;
   ownerId?: number;
@@ -25,4 +26,19 @@ export interface IAddress {
   buildingNumber?: string;
   pinCode?: string;
   exactLocation?: boolean;
+}
+
+export interface IRestaurantDetails {
+  restaurantId?: number;
+  kitchenType?: number[];
+  outlets?: number[];
+  cuisines?: number[];
+}
+
+export interface IRestaurantTimings {
+  restaurantId?: number;
+  day?: WEEK_DAYS;
+  openingTime?: string;
+  closingTime?: string;
+  isActive?: boolean;
 }

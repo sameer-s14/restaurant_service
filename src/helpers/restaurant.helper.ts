@@ -1,35 +1,26 @@
+import { IRestaurantTimings } from './../interface/model.interface';
 import { Injectable } from '@nestjs/common';
-import { ISaveBasicDetails } from 'src/interface';
+import { ITimingsObj } from 'src/interface';
 
 @Injectable()
 export class RestaurantHelper {
   /**
-   * @description Function to filter restaurant specific values
-   * @param obj
-   * @returns
+   * @description Function to Prepare data for bulk insert in restaurant_timings table
    */
-  public filterRestaurantData = (obj: ISaveBasicDetails) => {
-    const {
-      name,
-      phoneNumber,
-      phoneNumberCountryCode,
-      landlineNumber,
-      landLineCode,
-      ownerId,
-      whatsAppNotifications,
-      ...restData
-    } = obj;
-    return {
-      restaurantData: {
-        name,
-        phoneNumber,
-        phoneNumberCountryCode,
-        landlineNumber,
-        landLineCode,
-        ownerId,
-        whatsAppNotifications,
-      },
-      restData,
-    };
-  };
+  prepareBulkInsertForTimings(
+    restaurantId: number,
+    timings: ITimingsObj[],
+  ): IRestaurantTimings[] {
+    return timings
+      .map(
+        (timing) =>
+          timing?.shifts?.map((shift) => ({
+            day: timing?.day as any,
+            restaurantId,
+            closingTime: shift?.closingTime,
+            openingTime: shift?.openingTime,
+          })),
+      )
+      ?.flat();
+  }
 }

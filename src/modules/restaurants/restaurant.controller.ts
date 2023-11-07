@@ -1,17 +1,24 @@
+import { GrpcMethod } from '@nestjs/microservices';
+import { Controller } from '@nestjs/common';
 import {
   SERVICES,
   RESTAURANT_METHODS,
   IResponse,
   IRestaurant,
+  IRestaurantDetails,
+  ITimingsObj,
 } from 'src/interface';
-import { RestaurantService } from './restaurant.service';
+import { RestaurantService, RestaurantDetailsService } from '../../services';
 import { ISaveBasicDetails } from '../../interface';
-import { Controller } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
+import { RestaurantHelper } from 'src/helpers';
 
 @Controller()
 export class RestaurantController {
-  constructor(private readonly restaurantService: RestaurantService) {}
+  constructor(
+    private readonly restaurantService: RestaurantService,
+    private readonly restaurantDetailsService: RestaurantDetailsService,
+    private readonly restaurantHelper: RestaurantHelper,
+  ) {}
 
   /**
    * @description Function to save the restaurant Basic Details
@@ -52,5 +59,77 @@ export class RestaurantController {
   )
   getRestaurantBasicDetails(request: IRestaurant & { id: number }) {
     return this.restaurantService.getRestaurantBasicDetails(request);
+  }
+
+  // Function To get restaurant details like timing ,outlets, etc
+  @GrpcMethod(
+    SERVICES.RESTAURANT_SERVICE,
+    RESTAURANT_METHODS.GET_RESTAURANT_DETAILS,
+  )
+  getRestaurantDetails(request: {
+    id: number;
+    ownerId: number;
+    timings: boolean;
+  }) {
+    return this.restaurantDetailsService.getRestaurantDetails(request);
+  }
+
+  /**
+   * @description Function To get restaurant details like timing ,outlets, etc
+   **/
+  @GrpcMethod(
+    SERVICES.RESTAURANT_SERVICE,
+    RESTAURANT_METHODS.SAVE_RESTAURANT_DETAILS,
+  )
+  saveRestaurantDetails(
+    request: IRestaurantDetails & {
+      timings: ITimingsObj[];
+      id: number;
+      ownerId: number;
+    },
+  ) {
+    const { id, ownerId, timings, ...restaurantData } = request;
+    const timingsData = this.restaurantHelper.prepareBulkInsertForTimings(
+      id,
+      timings,
+    );
+    return this.restaurantDetailsService.saveRestaurantDetails(
+      id,
+      ownerId,
+      restaurantData as any,
+      timingsData,
+    );
+  }
+
+  /**
+   * @description Function To get restaurant details like timing ,outlets, etc
+   **/
+  @GrpcMethod(
+    SERVICES.RESTAURANT_SERVICE,
+    RESTAURANT_METHODS.UPDATE_RESTAURANT_DETAILS,
+  )
+  updateRestaurantDetails(
+    request: IRestaurantDetails & {
+      timings: ITimingsObj[];
+      id: number;
+      ownerId: number;
+    },
+  ) {
+    const { id, ownerId, timings, ...restaurantData } = request;
+    const timingsData = this.restaurantHelper.prepareBulkInsertForTimings(
+      id,
+      timings,
+    );
+    this.restaurantDetailsService.saveRestaurantDetails(
+      id,
+      ownerId,
+      restaurantData as any,
+      timingsData,
+    );
+    return {
+      message: 'Successfully updated',
+      data: null,
+      status: true,
+    };
   }
 }
