@@ -1,13 +1,14 @@
-export enum PACKAGE_NAMES {
-  RESTAURANT = 'restaurant',
-}
-
 export enum SERVICES {
   RESTAURANT_SERVICE = 'RestaurantService',
+  MISC_SERVICE = 'MiscService',
 }
 
 export enum RESTAURANT_METHODS {
   CHECK_HEALTH = 'checkHealth',
+}
+
+export enum MISC_METHODS {
+  GET_ENTITY_TYPE = 'getEntityByType',
 }
 
 export interface ISaveBasicDetails {
@@ -28,4 +29,11 @@ export interface ISaveBasicDetails {
   pinCode?: string;
   exactLocation?: boolean;
   whatsAppNotification?: boolean;
+}
+
+export interface ITypeMaster {
+  id?: number;
+  type?: string;
+  slug?: string;
+  isActive?: boolean;
 }
